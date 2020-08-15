@@ -1,7 +1,4 @@
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <iostream>
+#include <bits/stdc++.h>
 #define maxn 1000100
 using namespace std;
 int q[maxn], a[maxn];
@@ -57,3 +54,8 @@ int main()
     printf("\n");
     return 0;
 }
+/*
+8 3
+1 3 -1 -3 5 3 6 7
+
+ */
