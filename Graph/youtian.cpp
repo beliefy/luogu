@@ -20,7 +20,7 @@ void dfs(int r, int c, int id)
 }
 int main()
 {
-    while (scanf("%d%d", &m, &n) == 2 || m || n)
+    while (scanf("%d%d", &m, &n) == 2 && m && n)
     {
         memset(vis, 0, sizeof vis);
         for (int i = 0; i < m; ++i)
@@ -29,8 +29,8 @@ int main()
         for (int i = 0; i < m; ++i)
             for (int j = 0; j < n; ++j)
             {
-                if(vis[i][j]==0&&maps[i][j]=='@')
-                dfs(i, j, ++cnt);
+                if (vis[i][j] == 0 && maps[i][j] == '@')
+                    dfs(i, j, ++cnt);
             }
         cout << cnt << endl;
     }
