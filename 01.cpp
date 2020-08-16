@@ -47,8 +47,8 @@ int main()
                 dis[i][j] = 0x3f3f3f3f;
             else
                 dis[i][j] = dist(x[i], y[i], x[j], y[j]);
-            // cnt++;
-            e[cnt++].x = i;
+            cnt++;
+            e[cnt].x = i;
             e[cnt].y = j;
             e[cnt].v = dis[i][j];
         }

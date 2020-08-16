@@ -1,156 +1,102 @@
-#include <bits/stdc++.h>
-const int N = 60;
-const double EPS = 1e-6;
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+#include <cstring>
+#include <cmath>
 using namespace std;
-struct node
+
+int s, p;
+
+inline int read()
 {
-    string name;
-    double score;
-} a[N];
+    int X=0,w=0; char ch=0;
+    while(!isdigit(ch)) {w|=ch=='-';ch=getchar();}
+    while(isdigit(ch)) X=(X<<3)+(X<<1)+(ch^48),ch=getchar();
+    return w?-X:X;
+}
+
+inline void write(int x)
+{
+     if(x<0) putchar('-'),x=-x;
+     if(x>9) write(x/10);
+     putchar(x%10+'0');
+}
+
+int x[510], y[510];
+
+double dist(int x, int y, int i, int j)
+{
+	return sqrt((abs(x - i) * abs(x - i)) + ((abs(y - j)) * (abs(y - j))));
+}
+
+double dis[510][510];
+
+struct Edge
+{
+	int x;
+	int y;
+	double v;
+}ed[500010];int cnt;
+
+bool cmp(Edge a, Edge b)
+{
+	return a.v < b.v;
+}
+
+int f[50010];
+int find(int x)
+{
+	if(x == f[x]) return x;
+	return f[x] = find(f[x]);
+}
+
+int line[500010];
+
 int main()
 {
-    string s[100];
+//	freopen("wireless.in","r",stdin);
+//	freopen("wireless.out","w",stdout);
+	s = read(), p = read();
+	for(register int i=1;i<=p;i++)
+	{
+		x[i] = read(), y[i] = read();
 
-    for (int i = 1; i <= 56; ++i)
-    {
-        cin >> a[i].name;
-    }
-    for (int i = 1; i <= 56; ++i)
-    {
-        cin >> a[i].score;
-    }
-    double lev;
-    cin >> lev;
-    int ans = 1;
-    int cnt = 0;
-    for (int j = 1; j <= 56; ++j)
-    {
-        // if(fabs(a[j].score - lev)<EPS)
-        // {
-            cout << a[j].name << "" << a[j].score << endl;
-            cnt++;
-            // if (cnt >= 32)
-            // {
-            //     ans = j;
-            // }
-        // }
-    }
-    cout << a[ans].name << "" << a[ans].score << endl;
-    return 0;
+	}
+	for(register int i=1;i<=p;i++)
+	{
+		for(register int j=1;j<=p;j++)
+		{
+			if(i == j) dis[i][j]/* = dis[j][i] */= 0x7fffff;
+			else dis[i][j] /*= dis[j][i]*/ = dist(x[i], y[i], x[j], y[j]);
+			//cout<<dis[i][j]<<" ";
+			cnt++;
+			ed[cnt].x = i;
+			ed[cnt].y = j;
+			ed[cnt].v = dis[i][j];
+		}
+	}
+	for(register int i=1;i<=p;i++) f[i] = i;
+	
+	sort(ed+1, ed+1+cnt, cmp);
+	
+	
+	int k = 0;///////注意！！！！！！！！！！！！！ 
+	for(register int i=1;i<=cnt;i++)
+	{
+		int x = ed[i].x , y = ed[i].y ;
+		if(find(x) != find(y))
+		{
+			f[find(x)] = find(y);
+			k++;
+			line[k] = i;
+		}
+		if(k == p - 1)break;
+	}
+	//cout<<line[k - s/2];
+	//cout<<ed[line[k-s+1]].v;
+	printf("%.2lf",ed[line[p-s]].v);
+//	fclose(stdin);
+//	fclose(stdout);
+	return 0;
+	
 }
-/*
-苗文昊
-吴晨越
-沈德瑞
-马子恒
-常甜
-张馨月
-周宇疃
-王景东
-云恒
-唐名时
-王子灿
-刘心怡
-董艺帆
-苏月彤
-夏振兴
-李怡宁
-刘宏天
-韩鹏宇
-侯文昊
-张昶
-张可鑫
-李硕
-刘娅茹
-李春旺
-陈诗颖
-郑琳潇
-郑子涵
-张庆保
-王崧仁
-杨峥
-赵化硕
-郭思远
-王俊博
-司景瑞
-邢梓珺
-高婕
-高敬一
-王艺霏
-李越洋
-祝佳琪
-房一诺
-管晓涵
-赵嘉
-张正宇
-郭旭彪
-王子峥
-王守轩
-唐玉翔
-舒文博
-芦慧瑶
-李民宇
-李宁
-李艾欣
-曾庆鹤
-付晴
-尹志远
-551.5
-542
-539
-533
-531.5
-529.5
-527
-523.5
-523
-523
-523
-522.5
-521.5
-521.5
-520.5
-520.5
-520.5
-516.5
-514.5
-514
-514
-514
-512.5
-512
-510.5
-510.5
-510
-508
-509.5
-508
-508
-506
-505.5
-502.5
-501
-499.5
-499
-498.5
-498
-496
-493.5
-492
-491.5
-491
-491
-488.5
-488
-487.5
-484.5
-484.5
-484
-483
-481.5
-481.5
-481
-479
-
-
-*/
