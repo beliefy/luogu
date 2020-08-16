@@ -17,7 +17,7 @@ matrix mul(matrix x, matrix y)
     for (LL i = 0; i <= n; i++)
         for (LL j = 0; j <= n; j++)
             for (LL k = 0; k <= n; k++)
-                box.a[i][j] = (box.a[i][j] + (x.a[i][k] * y.a[k][j]) % mod) % mod; //注意取模
+                box.a[i][j] = (box.a[i][j] + (x.a[i][k] * y.a[k][j]) % mod) % mod; 
     return box;
 }
 matrix quick_pow(LL k)
