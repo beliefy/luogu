@@ -3,7 +3,7 @@
 #define inf 0x3f3f3f3f
 using namespace std;
 int n, m, q, cnt;
-int eve[MAXN], odd[MAXN], head[MAXN];
+int even[MAXN], odd[MAXN], head[MAXN];
 
 struct node
 {
@@ -19,11 +19,11 @@ void add(int x, int y)
 
 void bfs()
 {
-    memset(eve, inf, sizeof eve);
+    memset(even, inf, sizeof even);
     memset(odd, inf, sizeof odd);
     queue<int> q;
     q.push(1);
-    eve[1] = 0;
+    even[1] = 0;
     while (!q.empty())
     {
         int u = q.front();
@@ -31,14 +31,14 @@ void bfs()
         for (int i = head[u]; ~i; i = e[i].nxt)
         {
             int v = e[i].to;
-            if (odd[u] + 1 < eve[v])
+            if (odd[u] + 1 < even[v])
             {
-                eve[v] = odd[u] + 1;
+                even[v] = odd[u] + 1;
                 q.push(v);
             }
-            if (eve[u] + 1 < odd[v])
+            if (even[u] + 1 < odd[v])
             {
-                odd[v] = eve[u] + 1;
+                odd[v] = even[u] + 1;
                 q.push(v);
             }
         }
@@ -54,9 +54,7 @@ int main()
         cin >> u >> v;
         add(u, v), add(v, u);
     }
-
     bfs();
-
     for (int i = 1, x, y; i <= q; i++)
     {
         cin >> x >> y;
@@ -65,14 +63,10 @@ int main()
             cout << "No" << endl;
             continue;
         }
-        if (y % 2 == 0 && eve[x] <= y || y % 2 == 1 && odd[x] <= y)
-        {
+        if (y % 2 == 0 && even[x] <= y || y % 2 == 1 && odd[x] <= y)
             cout << "Yes" << endl;
-        }
         else
-        {
             cout << "No" << endl;
-        }
     }
     return 0;
 }
