@@ -34,4 +34,8 @@ int main()
     cout<<dp[n][m]<<endl;
     print(n, m);
     return 0;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> parent of 7c8312c... 整理

@@ -21,4 +21,8 @@ int main()
         cout << a[i];
     }
     return 0;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> parent of 7c8312c... 整理

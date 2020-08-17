@@ -29,4 +29,8 @@ int main()
     }
 
     return 0;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> parent of 7c8312c... 整理

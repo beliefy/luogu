@@ -32,4 +32,8 @@ int main(){
    }
 
    cout<<ans<<endl<<h.top().second;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> parent of 7c8312c... 整理

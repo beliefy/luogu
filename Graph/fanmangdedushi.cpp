@@ -32,4 +32,8 @@ int main()
         }
     cout << n - 1 << " " << maxn << endl;
     return 0;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> parent of 7c8312c... 整理

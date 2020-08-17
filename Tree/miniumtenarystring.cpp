@@ -32,4 +32,8 @@ int main()
     }
     cout << ans << endl;
     return 0;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> parent of 7c8312c... 整理

@@ -20,4 +20,8 @@ int main()
         cout<<s[i]<<endl;
     }
     return 0;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> parent of 7c8312c... 整理
