@@ -2,11 +2,9 @@
 using namespace std;
 // 定义了每个数中存多少位
 #define DIGITS 20100
-
 //////////////////// 高精度整数 ////////////////////
 struct BigInt
 {
-    // 两个构造函数
     // 默认情况下会把所有没用的位设为零
     BigInt() { memset(digits, 0, sizeof(digits)); }
     BigInt(string x)
@@ -46,7 +44,6 @@ struct BigInt
     // 用只有16位的short
     short digits[DIGITS + 2];
 };
-
 //////////////////// 高精度加法 ////////////////////
 BigInt add(BigInt x, BigInt y)
 {
@@ -76,12 +73,10 @@ BigInt add(BigInt x, BigInt y)
 BigInt multply(BigInt x, BigInt y)
 {
     BigInt ans, tmp;
-
     // 主要思路就是 取x的每一位和y相乘
     // 然后将结果累加起来
     // 以下的代码将每一位分别相乘的结果放在tmp中
     // 再累加到ans中
-
     for (int i = 1; i <= DIGITS; i++)
     {
         if (x.digits[i] == 0) // 如果x的这一位是零
@@ -107,7 +102,6 @@ BigInt multply(BigInt x, BigInt y)
     }
     return ans;
 }
-
 // 高精度比较的三种结果
 enum Result
 {
@@ -170,13 +164,11 @@ Result compare(BigInt x, BigInt y)
         return Equal;
     }
 }
-
 //////////////////// 高精度减法 ////////////////////
 BigInt minusX(BigInt x, BigInt y)
 {
     BigInt sum;
     int inc = 0; // 借位标志
-
     // 从最低位开始计算
     for (int i = 1; i <= DIGITS; i++)
     {
@@ -197,27 +189,22 @@ BigInt minusX(BigInt x, BigInt y)
 
 string s1, s2;
 BigInt x, y;
-
 /////////// 低调的主函数 ///////////
 int main(int argc, char *argv[])
 {
-
     // 以字符串输入
     cin >> s1 >> s2;
-
     // 生成高精度数
     x = BigInt(s1);
     y = BigInt(s2);
-
-    // // 判断结果是否会是负数
-    // if (compare(x, y) == Less)
-    // {                // 如果被减数小于减数
-    //     cout << "-"; // 先输出一个负号
-    //     swap(x, y);  // 交换被减数与减数
-    // }
-
+    // 判断结果是否会是负数
+    if (compare(x, y) == Less)
+    {                // 如果被减数小于减数
+        cout << "-"; // 先输出一个负号
+        swap(x, y);  // 交换被减数与减数
+    }
     // 计算并输出
-    cout << multply(x, y).toString() << endl;
-    
+    cout << minusX(x, y).toString() << endl;
+
     return 0;
 }
