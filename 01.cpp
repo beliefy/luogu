@@ -1,67 +1,57 @@
-#include <cstdio>
-#include <cstring>
-#include <cstdlib>
-#include <cctype>
-#include <cmath>
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <set>
-#include <map>
-#include <queue>
-#include <stack>
-typedef long long ll;
-typedef unsigned long long ull;
+#include <bits/stdc++.h>
 using namespace std;
-const int P = 2017;
-struct Matrix
-{
-    int a[31][31];
-    inline Matrix operator*(const Matrix &rhs)
-    {
-        Matrix ret;
-        memset(&ret, 0, sizeof ret);
-        for (int i = 0; i <= 30; i++)
-            for (int j = 0; j <= 30; j++)
-                for (int k = 0; k <= 30; k++)
-                    (ret.a[i][j] += a[i][k] * rhs.a[k][j] % P) %= P;
-        return ret;
-    }
-} mp;
-Matrix ksm(Matrix &a, int b)
-{
-    Matrix ret;
-    memset(&ret, 0, sizeof ret);
-    for (int i = 0; i <= 30; i++)
-        ret.a[i][i] = 1;
-    while (b)
-    {
-        if (b & 1)
-            ret = ret * a;
-        a = a * a;
-        b >>= 1;
-    }
-    return ret;
-}
-int u, v, n, m, t;
+int m, n, ans = 0;
+int sequence[625];
+int t[25][25], serial[25][25];
+int mac[21][100001] = {0};
+// mac[机器编号][时间
+int step[21] = {0};
+int las_time[21] = {0};
 int main()
 {
-    scanf("%d%d", &n, &m);
-    for (int i = 1; i <= m; i++)
-    {
-        scanf("%d%d", &u, &v);
-        mp.a[u][v] = 1;
-        mp.a[v][u] = 1;
-    }
-    for (int i = 0; i <= n; i++)
-        mp.a[i][i] = 1;
-    for (int i = 1; i <= n; i++)
-        mp.a[i][0] = 1;
-    int ans = 0;
-    scanf("%d", &t);
-    Matrix anss = ksm(mp, t);
-    for (int i = 0; i <= n; i++)
-        (ans += anss.a[1][i]) %= P;
-    printf("%d\n", ans);
-    return 0;
+	cin >> m >> n;
+	for (int i = 1; i <= m * n; i++)
+	{
+		cin >> sequence[i];
+	}
+	for (int i = 1; i <= n; i++)
+	{
+		for (int j = 1; j <= m; j++)
+		{
+			cin >> serial[i][j];
+		}
+	}
+	for (int i = 1; i <= n; i++)
+	{
+		for (int j = 1; j <= m; j++)
+		{
+			cin >> t[i][j];
+		}
+	}
+	for (int i = 1; i <= m * n; i++) //遍历工序
+	{
+		int now = sequence[i];
+		step[now]++;
+		int id = serial[now][step[now]], cost = t[now][step[now]], s = 0, j = las_time[now] + 1;
+		while (true)
+		{
+			if (!mac[id][j])
+				s++;
+			else
+				s = 0;
+			if (s == cost)
+			{
+				for (int k = j - cost + 1; k <= j; k++)
+				{
+					mac[id][k] = 1;
+				}
+				ans = max(ans, j);
+				las_time[now] = j;
+				break;
+			}
+			j++;
+		}
+	}
+	cout << ans << endl;
+	return 0;
 }
