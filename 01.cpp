@@ -3,8 +3,7 @@ using namespace std;
 int m, n, ans = 0;
 int sequence[625];
 int t[25][25], serial[25][25];
-int mac[21][100001] = {0};
-// mac[机器编号][时间
+int use[21][100001] = {0};
 int step[21] = {0};
 int las_time[21] = {0};
 int main()
@@ -33,17 +32,17 @@ int main()
 		int now = sequence[i];
 		step[now]++;
 		int id = serial[now][step[now]], cost = t[now][step[now]], s = 0, j = las_time[now] + 1;
-		while (true)
+		while (true)//查找机器未工作时段
 		{
-			if (!mac[id][j])
+			if (!use[id][j])
 				s++;
 			else
 				s = 0;
 			if (s == cost)
 			{
-				for (int k = j - cost + 1; k <= j; k++)
+				for (int k = j - cost + 1; k <= j; k++) //维护时段数组
 				{
-					mac[id][k] = 1;
+					use[id][k] = 1;
 				}
 				ans = max(ans, j);
 				las_time[now] = j;
