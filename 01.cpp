@@ -1,56 +1,63 @@
 #include <bits/stdc++.h>
+#define ll long long
 using namespace std;
-int m, n, ans = 0;
-int sequence[625];
-int t[25][25], serial[25][25];
-int use[21][100001] = {0};
-int step[21] = {0};
-int las_time[21] = {0};
+const int MAXN = 200005;
+ll a[MAXN], f[MAXN][21], s, D, Logn[MAXN];
+int n, m;
+bool flag;
+void pre()
+{
+    Logn[1] = 0;
+    Logn[2] = 1;
+    for (int i = 3; i < MAXN; ++i)
+    {
+        Logn[i] = Logn[i / 2] + 1;
+    }
+}
+void st(int id)
+{
+	f[id][0] = a[id];
+	for (int i = 1; i << i <= id; i++)
+		f[id][i] = max(f[id][i - 1], f[id - (1 << (i - 1))][i - 1]);
+}
+ll query(int x, int y)
+{
+	int s  = Logn[y - x + 1];
+	// double t = log2(y - x + 1);
+	// int s = t;
+	return max(f[y][s], f[x + (1 << s) - 1][s]);
+}
 int main()
 {
-	cin >> m >> n;
-	for (int i = 1; i <= m * n; i++)
+
+	memset(f, 0, sizeof f);
+	pre();
+	cin >> m >> D;
+	for (int i = 1; i <= m; i++)
 	{
-		cin >> sequence[i];
-	}
-	for (int i = 1; i <= n; i++)
-	{
-		for (int j = 1; j <= m; j++)
+		char c;
+		cin >> c;
+		ll x;
+		if (c == 'A')
 		{
-			cin >> serial[i][j];
+			cin >> x;
+			a[++n] = (x + s) % D;
+			st(n);
 		}
-	}
-	for (int i = 1; i <= n; i++)
-	{
-		for (int j = 1; j <= m; j++)
+		else
 		{
-			cin >> t[i][j];
-		}
-	}
-	for (int i = 1; i <= m * n; i++) //遍历工序
-	{
-		int now = sequence[i];
-		step[now]++;
-		int id = serial[now][step[now]], cost = t[now][step[now]], s = 0, j = las_time[now] + 1;
-		while (true)//查找机器未工作时段
-		{
-			if (!use[id][j])
-				s++;
-			else
-				s = 0;
-			if (s == cost)
+			int L;
+			cin >> L;
+			ll ans;
+			if (L == 1)
 			{
-				for (int k = j - cost + 1; k <= j; k++) //维护时段数组
-				{
-					use[id][k] = 1;
-				}
-				ans = max(ans, j);
-				las_time[now] = j;
-				break;
+				cout << a[n] << endl;
+				s = a[n];
+				continue;
 			}
-			j++;
+			s = query(n - L + 1, n);
+			cout << s << endl;
 		}
 	}
-	cout << ans << endl;
 	return 0;
 }
