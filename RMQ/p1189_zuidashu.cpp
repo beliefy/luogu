@@ -24,18 +24,16 @@ void pre()
     }
 }
 
-int query(int L, int R) //查询区间，区间长度(1<<j)一定要从左右全部覆盖
+int query(int L, int R) 
 {
     int log = 0;
-    // while ((R - L + 1) >= (1 << (log + 1))) //提前log+1完了直接使用
-    //     log++;
+
     log=Logn[R-L+1];
-    return max(dp[R][log], dp[L + (1 << log) - 1][log]); //一定要完全覆盖查询的区间哦
+    return max(dp[R][log], dp[L + (1 << log) - 1][log]);
 }
 
 int main()
 {
-    // scanf("%d %d", &M, &D);
     pre();
     cin>>M>>D;
     char ch;
