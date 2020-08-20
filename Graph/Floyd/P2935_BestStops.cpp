@@ -11,7 +11,7 @@ int main()
     for (int i = 1; i <= p; ++i)
         cin >> fav[i];
     for (int i = 1; i <= n; ++i)
-        for (int j = 1; i <= n; ++j)
+        for (int j = 1; j <= n; ++j)
             if (i == j)
                 d[i][j] = 0;
     while(m--)
@@ -25,7 +25,7 @@ int main()
             for (int j = 1; j <= n; j++)
                 d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
 
-    int ans = inf;
+    int ans = inf,res;
     for(int i =1;i<=n;++i)
     {
         int sum=0;
@@ -33,9 +33,14 @@ int main()
         {
             sum+=d[i][fav[j]];
         }
-        ans=min(ans,sum);
+        // ans=min(ans,sum);
+        if(sum<ans)
+        {
+            ans=sum;
+            res=i;
+        }
     }
-    cout<<ans<<endl;
+    cout<<res<<endl;
 
     return 0;
 }
