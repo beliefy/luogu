@@ -1,18 +1,8 @@
 #include <bits/stdc++.h>
-#define inf 0x7f7f7f7f
+#define ls (p << 1)
+#define rs (p << 1 | 1)
+#define fa (p >> 1)
 using namespace std;
-
-int read()
-{
-    int x = 0, f = 1;
-    char ch = getchar();
-    for (; ch < '0' || ch > '9'; ch = getchar())
-        if (ch == '-')
-            f = -1;
-    for (; ch >= '0' && ch <= '9'; ch = getchar())
-        x = (x << 1) + (x << 3) + ch - '0';
-    return x * f;
-}
 const int N = 1e5, M = 5e4;
 int nxt[(N << 1) + 10], head[N + 10], child[(N << 1) + 10], inde[N + 10];
 int dfn[N + 10], low[N + 10], sta[N + 10], num[N + 10], milk[N + 10];
@@ -21,9 +11,7 @@ int tot, Time, top, cnt, n, m;
 vector<int> vec[M + 10];
 struct node
 {
-#define ls (p << 1)
-#define rs (p << 1 | 1)
-#define fa (p >> 1)
+
     int Q[N + 10], len;
     void insert(int x)
     {
@@ -95,7 +83,7 @@ void topo()
 {
     int T = 0;
     for (int i = 1; i <= n; i++)
-        if (!inde[i])
+        if (!inde[i]) //入度为零
             Heap.insert(i);
     while (Heap.len)
     {
@@ -115,7 +103,7 @@ int main()
         while (j--)
         {
             int x;
-            cin>>x;
+            cin >> x;
             vec[i].push_back(x);
         }
     }
@@ -134,6 +122,6 @@ int main()
             add(vec[i][j - 1], vec[i][j]);
     topo();
     for (int i = 1; i <= n; i++)
-        printf("%d", milk[i]), i == n ? putchar('\n') : putchar(' ');
+        cout << milk[i] << " ";
     return 0;
 }
